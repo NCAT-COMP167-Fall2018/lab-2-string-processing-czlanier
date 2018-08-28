@@ -21,10 +21,11 @@ public class StringProcessing {
     public static void main(String[] args) {
         
         readFileData(args[0]);
+        
     }
     
     public static void readFileData(String filename){
-        
+
         int track = 0;
         try {
             Scanner scan  = new Scanner(new File(filename));
@@ -32,12 +33,12 @@ public class StringProcessing {
                String[] eachLine = scan.nextLine().split(",");
                String firstName = eachLine[0].trim();
                String lastName = eachLine[1].trim();
-               String age = eachLine[2].trim();
-               String gender = eachLine[3].trim();
+               String age = eachLine[3].trim();
+               String gender = eachLine[2].trim();
                String phoneNumber = eachLine[4].trim();
                String email  = eachLine[5].trim();
                
-               data[track] = String.format("%-15s%-15s%-10s%10s   %-15s%-15s", firstName, lastName, age, gender, phoneNumber, email);
+               data[track] = String.format("%-15s   %-20s    %-10s   %10s       %-10s     %-15s", verifyFirstName(firstName)+ ": " + firstName, verifyLastName(lastName) + ": " + lastName, verifyAge(age)+ ": " + age, verifyGender(gender) + ": " + gender, verifyPhoneNumber(phoneNumber) + ": " + phoneNumber, verifyEmail(email) + ": " + email );
                System.out.println(data[track]);
                track++;
             }
@@ -47,8 +48,67 @@ public class StringProcessing {
         }
        
     }
-    public static void validation(){  
-        
+    
+    private static boolean verifyFirstName(String fname){
+        if(fname == null || fname.equals("")){
+            return false;
+        }
+        if(!fname.matches("[a-zA-Z]*")){
+            return false;
+        }
+        return true;
+    } 
+    
+    private static boolean verifyLastName(String lname){
+        if(lname == null || lname.equals("")){
+            return false;
+        }
+        if(!lname.matches("[a-zA-Z]*")){
+            return false;
+        }
+        return true;
     }
+    
+    private static boolean verifyGender(String gend){
+        if(gend == null || gend.equals("")){
+            return false;
+        }
+        if(!(gend.equalsIgnoreCase("male") || gend.equalsIgnoreCase("female"))){
+            return false;
+        }
+        return true;
+    }
+    
+    private static boolean verifyAge(String age){
+       
+        if(age == null || age.equals("")){
+            return false;
+        }
+        if(Integer.valueOf(age)< 1 || Integer.valueOf(age) > 130){
+            return false;
+        }
+        return true;
+    }
+    
+    private static boolean verifyEmail(String email){
+        if(email == null || email.equals("")){
+            return false;
+        }
+        if(!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")){
+            return false;
+        }
+        return true;
+    }
+    
+    private static boolean verifyPhoneNumber(String phone){
+        if(phone == null || phone.equals("")){
+           return false; 
+        }
+        if(!phone.matches("\\(\\d{3}\\)\\d{3}-\\d{4}")){ 
+            return false;
+        }	
+        return true;
+    }
+    
     
 }
